@@ -230,7 +230,7 @@ handler.post(async (req, res) => {
       };
 
       await axios.post(response_url, message);
-      res.status(200).json({ text: 'Request processed.' });
+      res.status(200).json({ text: 'Surprise 🫣' });
     } else {
       res.status(200).json({ text: `Sorry, I couldn't find any information for ${symbol.toUpperCase()}.` });
     }
