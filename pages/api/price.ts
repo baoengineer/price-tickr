@@ -21,25 +21,21 @@ handler.post(async (req, res) => {
   const symbol = text.trim().toUpperCase();
 
   try {
-    const response = await axios.get('https://api.coingecko.com/api/v3/simple/price', {
+    const response = await axios.get('https://api.coingecko.com/api/v3/coins/markets', {
       params: {
-        ids: symbol,
-        vs_currencies: 'usd',
-        include_market_cap: 'true',
-        include_24hr_vol: 'true',
-        include_24hr_change: 'true',
-        include_last_updated_at: 'true',
+        vs_currency: 'usd',
+        ids: symbol.toLowerCase(),
       },
     });
 
-    const data = response.data[symbol];
+    const data = response.data[0];
 
     if (data) {
-      const price = data['usd'];
-      const marketCap = data['usd_market_cap'];
-      const volume = data['usd_24h_vol'];
-      const change = data['usd_24h_change'];
-      const lastUpdated = new Date(data['last_updated_at'] * 1000);
+      const price = data['current_price'];
+      const marketCap = data['market_cap'];
+      const volume = data['total_volume'];
+      const change = data['price_change_percentage_24h'];
+      const lastUpdated = new Date(data['last_updated']);
 
       const message = {
         response_type: 'in_channel',
