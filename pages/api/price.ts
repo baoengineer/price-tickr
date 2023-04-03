@@ -18,13 +18,13 @@ const handler = nextConnect<SlackRequest, NextApiResponse>();
 
 handler.post(async (req, res) => {
   const { text, response_url } = req.body;
-  const symbol = text.trim().toUpperCase();
+  const symbol = text.trim().toLowerCase();
 
   try {
     const response = await axios.get('https://api.coingecko.com/api/v3/coins/markets', {
       params: {
         vs_currency: 'usd',
-        ids: symbol.toLowerCase(),
+        ids: symbol,
       },
     });
 
@@ -39,7 +39,7 @@ handler.post(async (req, res) => {
 
       const message = {
         response_type: 'in_channel',
-        text: `*${symbol}*`,
+        text: `*${symbol.toUpperCase()}*`,
         attachments: [
           {
             fields: [
@@ -53,14 +53,10 @@ handler.post(async (req, res) => {
         ],
       };
 
-      await web.chat.postMessage({
-        channel: response_url,
-        ...message,
-      });
-
+      await axios.post(response_url, message);
       res.status(200).json({ text: 'Request processed.' });
     } else {
-      res.status(200).json({ text: `Sorry, I couldn't find any information for ${symbol}.` });
+      res.status(200).json({ text: `Sorry, I couldn't find any information for ${symbol.toUpperCase()}.` });
     }
   } catch (error) {
     console.error(error);
