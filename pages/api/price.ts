@@ -235,10 +235,6 @@ handler.post(async (req, res) => {
       res.status(200).json({ text: `Sorry, I couldn't find any information for ${symbol.toUpperCase()}.` });
     }
   }  catch (error) {
-    console.error('Error:', error.message);
-    if (error.response && error.response.data) {
-      console.error('Response data:', error.response.data);
-    }
     res.status(500).json({ text: 'An error occurred while fetching the data. Please try again later.' });
   }
   
