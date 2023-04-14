@@ -250,11 +250,6 @@ handler.post(async (req, res) => {
 								short: true,
 							},
 							{
-								title: '7d Change',
-								value: `${change7d.toFixed(2)}%`,
-								short: true,
-							},
-							{
 								title: 'Fully Diluted Valuation',
 								value: `$${fdv.toLocaleString('en-US', {
 									minimumFractionDigits: 0,
