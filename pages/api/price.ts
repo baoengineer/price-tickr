@@ -215,6 +215,7 @@ handler.post(async (req, res) => {
 			const marketCap = data['market_cap'];
 			const volume = data['total_volume'];
 			const change = data['price_change_percentage_24h'];
+			const change7d = data['price_change_percentage_7d_in_currency'];
 			const lastUpdated = new Date(data['last_updated']);
 			const athPrice = data['ath'];
 			const fdv = data['fully_diluted_valuation'];
@@ -249,18 +250,25 @@ handler.post(async (req, res) => {
 								short: true,
 							},
 							{
-								title: 'Last Updated',
-								value: lastUpdated.toLocaleString(),
+								title: '7d Change',
+								value: `${change7d.toFixed(2)}%`,
 								short: true,
 							},
 							{
 								title: 'Fully Diluted Valuation',
-								value: `$${fdv.toFixed(2)}`,
+								value: `$${fdv.toLocaleString('en-US', {
+									minimumFractionDigits: 0,
+								})}`,
 								short: true,
 							},
 							{
 								title: '% from ATH',
 								value: `${percentageFromAth}%`,
+								short: true,
+							},
+							{
+								title: 'Last Updated',
+								value: lastUpdated.toLocaleString(),
 								short: true,
 							},
 						],
