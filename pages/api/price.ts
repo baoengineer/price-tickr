@@ -219,9 +219,10 @@ handler.post(async (req, res) => {
 			const lastUpdated = new Date(data['last_updated']);
 			const athPrice = data['ath'];
 			const fdv = data['fully_diluted_valuation'];
-			const percentageFromAth = (((athPrice - price) / athPrice) * 100).toFixed(
-				2
-			);
+			const percentageFromAth = (
+				((athPrice - price) / athPrice) *
+				100
+			)?.toFixed(2);
 
 			const message = {
 				response_type: 'in_channel',
@@ -232,28 +233,34 @@ handler.post(async (req, res) => {
 							{ title: 'Price', value: `$${price.toFixed(2)}`, short: true },
 							{
 								title: 'Market Cap',
-								value: `$${marketCap.toLocaleString('en-US', {
-									minimumFractionDigits: 0,
-								})}`,
+								value: `$${
+									marketCap?.toLocaleString('en-US', {
+										minimumFractionDigits: 0,
+									}) || 'N/A'
+								}`,
 								short: true,
 							},
 							{
 								title: '24h Volume',
-								value: `$${volume.toLocaleString('en-US', {
-									minimumFractionDigits: 0,
-								})}`,
+								value: `$${
+									volume?.toLocaleString('en-US', {
+										minimumFractionDigits: 0,
+									}) || 'N/A'
+								}`,
 								short: true,
 							},
 							{
 								title: '24h Change',
-								value: `${change.toFixed(2)}%`,
+								value: `${change?.toFixed(2) || 0}%`,
 								short: true,
 							},
 							{
 								title: 'Fully Diluted Valuation',
-								value: `$${fdv.toLocaleString('en-US', {
-									minimumFractionDigits: 0,
-								})}`,
+								value: `$${
+									fdv?.toLocaleString('en-US', {
+										minimumFractionDigits: 0,
+									}) || 'N/A'
+								}`,
 								short: true,
 							},
 							{
@@ -263,7 +270,7 @@ handler.post(async (req, res) => {
 							},
 							{
 								title: 'Last Updated',
-								value: lastUpdated.toLocaleString(),
+								value: lastUpdated?.toLocaleString(),
 								short: true,
 							},
 						],
